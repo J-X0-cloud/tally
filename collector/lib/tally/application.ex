@@ -1,6 +1,4 @@
 defmodule Tally.Application do
-  # See https://elixir.hexdocs.pm/Application.html
-  # for more information on OTP Applications
   @moduledoc false
 
   use Application
@@ -11,20 +9,13 @@ defmodule Tally.Application do
       TallyWeb.Telemetry,
       {DNSCluster, query: Application.get_env(:tally, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: Tally.PubSub},
-      # Start a worker by calling: Tally.Worker.start_link(arg)
-      # {Tally.Worker, arg},
-      # Start to serve requests, typically the last entry
+      Tally.Ingest.Salts,
       TallyWeb.Endpoint
     ]
 
-    # See https://elixir.hexdocs.pm/Supervisor.html
-    # for other strategies and supported options
-    opts = [strategy: :one_for_one, name: Tally.Supervisor]
-    Supervisor.start_link(children, opts)
+    Supervisor.start_link(children, strategy: :one_for_one, name: Tally.Supervisor)
   end
 
-  # Tell Phoenix to update the endpoint configuration
-  # whenever the application is updated.
   @impl true
   def config_change(changed, _new, removed) do
     TallyWeb.Endpoint.config_change(changed, removed)
