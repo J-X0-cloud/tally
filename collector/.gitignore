@@ -29,3 +29,7 @@ tally-*.tar
 # Local environment files.
 .env
 .env.*
+!.env.example
+
+# Editor and language-server caches.
+/.elixir_ls/

@@ -46,7 +46,10 @@ if config_env() == :prod do
   # Nothing the collector signs outlives the process (there are no sessions or cookies), so a random
   # key is acceptable when SECRET_KEY_BASE is not set.
   secret_key_base =
-    System.get_env("SECRET_KEY_BASE") || Base.encode64(:crypto.strong_rand_bytes(48))
+    case System.get_env("SECRET_KEY_BASE") do
+      blank when blank in [nil, ""] -> Base.encode64(:crypto.strong_rand_bytes(48))
+      value -> value
+    end
 
   host = System.get_env("PHX_HOST") || "localhost"
 
