@@ -37,7 +37,7 @@ defmodule TallyWeb.StatsControllerTest do
     :ok
   end
 
-  defp api(key \\ "test-business"),
+  defp api(key),
     do: build_conn() |> put_req_header("authorization", "Bearer " <> key)
 
   defp get_json(path, key \\ "test-business", status \\ 200) do
