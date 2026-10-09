@@ -1,0 +1,210 @@
+{
+  "volumes": [
+    "10k",
+    "100k",
+    "200k",
+    "500k",
+    "1M",
+    "2M",
+    "5M",
+    "10M+"
+  ],
+  "yearlyMonthsCharged": 10,
+  "plans": [
+    {
+      "id": "starter",
+      "name": "Starter",
+      "description": "For a personal site or a single small store.",
+      "prices": [
+        9,
+        19,
+        29,
+        49,
+        69,
+        99,
+        149,
+        null
+      ],
+      "features": [
+        "1 site",
+        "3 years of data retention",
+        "All core reports and realtime",
+        "Goals and custom events",
+        "Email and Slack reports",
+        "Import from other analytics tools"
+      ],
+      "popular": false,
+      "limits": {
+        "sites": 1,
+        "teammates": 1,
+        "retentionYears": 3,
+        "statsApiPerHour": null,
+        "funnels": false,
+        "revenueGoals": false,
+        "sharedLinks": false,
+        "customProperties": false,
+        "managedProxy": false
+      }
+    },
+    {
+      "id": "growth",
+      "name": "Growth",
+      "description": "For teams and agencies with a few sites.",
+      "prices": [
+        14,
+        29,
+        44,
+        69,
+        99,
+        139,
+        199,
+        null
+      ],
+      "features": [
+        "Up to 5 sites and 5 teammates",
+        "Everything in Starter",
+        "Funnels and revenue goals",
+        "Shared links and embeds",
+        "Saved segments and annotations",
+        "Stats API"
+      ],
+      "popular": true,
+      "limits": {
+        "sites": 5,
+        "teammates": 5,
+        "retentionYears": 3,
+        "statsApiPerHour": 600,
+        "funnels": true,
+        "revenueGoals": true,
+        "sharedLinks": true,
+        "customProperties": false,
+        "managedProxy": false
+      }
+    },
+    {
+      "id": "business",
+      "name": "Business",
+      "description": "For companies that live in their data.",
+      "prices": [
+        29,
+        54,
+        79,
+        119,
+        159,
+        219,
+        299,
+        null
+      ],
+      "features": [
+        "Up to 20 sites and 20 teammates",
+        "Everything in Growth",
+        "5 years of data retention",
+        "Custom properties",
+        "First-party proxy, managed for you",
+        "Priority support"
+      ],
+      "popular": false,
+      "limits": {
+        "sites": 20,
+        "teammates": 20,
+        "retentionYears": 5,
+        "statsApiPerHour": 2000,
+        "funnels": true,
+        "revenueGoals": true,
+        "sharedLinks": true,
+        "customProperties": true,
+        "managedProxy": true
+      }
+    }
+  ],
+  "comparison": [
+    {
+      "feature": "Sites",
+      "values": [
+        "1",
+        "5",
+        "20"
+      ]
+    },
+    {
+      "feature": "Teammates",
+      "values": [
+        "1",
+        "5",
+        "20"
+      ]
+    },
+    {
+      "feature": "Data retention",
+      "values": [
+        "3 years",
+        "3 years",
+        "5 years"
+      ]
+    },
+    {
+      "feature": "Realtime, sources, pages, locations, devices",
+      "values": [
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "feature": "Goals and custom events",
+      "values": [
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "feature": "Funnels",
+      "values": [
+        false,
+        true,
+        true
+      ]
+    },
+    {
+      "feature": "Revenue goals",
+      "values": [
+        false,
+        true,
+        true
+      ]
+    },
+    {
+      "feature": "Shared links and embeds",
+      "values": [
+        false,
+        true,
+        true
+      ]
+    },
+    {
+      "feature": "Stats API",
+      "values": [
+        false,
+        "600 req/hr",
+        "2,000 req/hr"
+      ]
+    },
+    {
+      "feature": "Custom properties",
+      "values": [
+        false,
+        false,
+        true
+      ]
+    },
+    {
+      "feature": "Managed first-party proxy",
+      "values": [
+        false,
+        false,
+        true
+      ]
+    }
+  ]
+}

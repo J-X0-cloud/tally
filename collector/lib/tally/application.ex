@@ -14,6 +14,7 @@ defmodule Tally.Application do
       Tally.Events.Buffer,
       Tally.Live,
       TallyWeb.Presence,
+      Tally.Billing.RateLimiter,
       TallyWeb.Endpoint
     ]
 
