@@ -11,10 +11,13 @@ import { CheckList } from "@/components/ui/CheckList";
 import { CodeBlock } from "@/components/ui/CodeBlock";
 import { Icon } from "@/components/ui/Icon";
 import { CUSTOMER_WORDMARKS, GOAL_POINTS, HERO_NOTES, SCRIPT_POINTS } from "@/lib/data/home";
-import { SITE } from "@/lib/data/simulation";
+import { getDemoDashboard } from "@/lib/api";
 import { INSTALL_SNIPPET } from "@/lib/data/snippets";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const demo = await getDemoDashboard();
+  const month = demo.data["30d"];
+
   return (
     <>
       <section className="hero">
@@ -53,9 +56,9 @@ export default function HomePage() {
                 <i />
                 <i />
                 <i />
-                <span className="url">app.tallystats.com/{SITE.domain}</span>
+                <span className="url">app.tallystats.com/{demo.site.domain}</span>
               </div>
-              <DashboardPreview />
+              <DashboardPreview dashboard={demo} />
             </div>
           </div>
         </div>
@@ -147,7 +150,7 @@ export default function HomePage() {
                 <b>Checkout funnel</b>
                 <span className="int">Last 30 days</span>
               </div>
-              <FunnelRows range="30d" />
+              <FunnelRows steps={month.funnel} />
             </div>
           </div>
         </div>

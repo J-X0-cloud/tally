@@ -1,21 +1,20 @@
-import { SITE } from "@/lib/data/simulation";
-import { LIVE_FEED, REALTIME_SPARK } from "@/lib/data/tour";
+import type { Realtime } from "@/types/analytics";
 
-export function RealtimeCard() {
+export function RealtimeCard({ realtime }: { realtime: Realtime }) {
   return (
     <div className="card rt">
       <div className="big">
         <span>Current visitors</span>
-        <b>{SITE.currentVisitors}</b>
+        <b>{realtime.currentVisitors}</b>
         <span>+12 vs. 30 min ago</span>
         <div className="spark">
-          {REALTIME_SPARK.map((h, i) => (
+          {realtime.spark.map((h, i) => (
             <i key={i} style={{ height: `${h}%` }} />
           ))}
         </div>
       </div>
       <ul className="feed">
-        {LIVE_FEED.map((e) => (
+        {realtime.feed.map((e) => (
           <li key={e.ago}>
             <time>{e.ago} ago</time>
             <span className="p">{e.path}</span>

@@ -5,13 +5,13 @@ import { useState } from "react";
 
 import { Icon } from "@/components/ui/Icon";
 import { compact } from "@/lib/format";
-import { DEFAULT_SOURCE_COLOR, DIMENSIONS, SOURCE_COLORS } from "@/lib/data/dimensions";
-import { breakdownRows } from "@/lib/metrics";
-import type { BreakdownRow, BreakdownTab, DimensionKey, RangeKey } from "@/types/analytics";
+import { DEFAULT_SOURCE_COLOR, SOURCE_COLORS } from "@/lib/sourceColors";
+import type { BreakdownDimension, BreakdownRow, BreakdownTab } from "@/types/analytics";
 
 interface BreakdownPanelProps {
-  dimension: DimensionKey;
-  range: RangeKey;
+  dimension: BreakdownDimension;
+  /** Rows for the selected range, keyed by tab. */
+  rows: Record<string, BreakdownRow[]>;
   /** Static previews show the first tab only and ignore clicks. */
   interactive?: boolean;
   className?: string;
@@ -30,11 +30,15 @@ function Chip({ tab, row }: { tab: BreakdownTab; row: BreakdownRow }) {
 }
 
 /** Ranked list with in-row bars and per-panel tabs (e.g. Channels / Sources / Campaigns). */
-export function BreakdownPanel({ dimension, range, interactive = true, className }: BreakdownPanelProps) {
-  const dim = DIMENSIONS[dimension];
+export function BreakdownPanel({
+  dimension: dim,
+  rows: rowsByTab,
+  interactive = true,
+  className,
+}: BreakdownPanelProps) {
   const [tabKey, setTabKey] = useState(dim.tabs[0].key);
   const tab = dim.tabs.find((t) => t.key === tabKey)!;
-  const rows = breakdownRows(dimension, tab.key, range);
+  const rows = rowsByTab[tab.key] ?? [];
 
   return (
     <section className={clsx("panel", className)}>

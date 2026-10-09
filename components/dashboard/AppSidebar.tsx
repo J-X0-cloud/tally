@@ -3,11 +3,13 @@ import Link from "next/link";
 import { Logo } from "@/components/site/Logo";
 import { Icon } from "@/components/ui/Icon";
 import type { IconName } from "@/components/ui/Icon";
-import { SITE } from "@/lib/data/simulation";
+import type { SiteInfo } from "@/types/analytics";
 
-const SITE_LINKS: Array<{ icon: IconName; label: string; badge?: number; active?: boolean }> = [
+const siteLinks = (
+  site: SiteInfo,
+): Array<{ icon: IconName; label: string; badge?: number; active?: boolean }> => [
   { icon: "layers", label: "Dashboard", active: true },
-  { icon: "live", label: "Realtime", badge: SITE.currentVisitors },
+  { icon: "live", label: "Realtime", badge: site.currentVisitors },
   { icon: "goal", label: "Goals" },
   { icon: "funnel", label: "Funnels" },
   { icon: "mail", label: "Reports" },
@@ -19,12 +21,12 @@ const WORKSPACE_LINKS: Array<{ icon: IconName; label: string; badge?: number }> 
   { icon: "shield", label: "Settings" },
 ];
 
-export function AppSidebar() {
+export function AppSidebar({ site }: { site: SiteInfo }) {
   return (
     <aside className="aside">
       <Logo />
       <div className="grp">Site</div>
-      {SITE_LINKS.map((l) =>
+      {siteLinks(site).map((l) =>
         l.active ? (
           <Link key={l.label} className="on" href="/demo" aria-current="page">
             <Icon name={l.icon} size={16} />
@@ -54,12 +56,12 @@ export function AppSidebar() {
   );
 }
 
-export function AppBar() {
+export function AppBar({ site }: { site: SiteInfo }) {
   return (
     <div className="abar">
       <Logo className="logo mlogo" size={26} />
       <span className="crumbs">
-        {SITE.name} / <b>Dashboard</b>
+        {site.name} / <b>Dashboard</b>
       </span>
       <span className="demo-tag">Live demo</span>
       <div className="row">

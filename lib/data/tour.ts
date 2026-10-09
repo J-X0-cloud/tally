@@ -6,21 +6,6 @@ export const REALTIME_POINTS: CheckItem[] = [
   { lead: "Launch mode", text: "for a full-screen view on the office TV." },
 ];
 
-/** Visitors per minute over the last 30 minutes, as % of the peak minute. */
-export const REALTIME_SPARK = [
-  34, 41, 38, 52, 47, 44, 58, 61, 55, 49, 63, 70, 66, 58, 62, 74, 69, 72, 80, 76, 71, 83, 78, 88, 92, 85, 79,
-  90, 86, 100,
-];
-
-export const LIVE_FEED = [
-  { ago: "2s", path: "/products/speckled-stoneware-mug", source: "Instagram", country: "US" },
-  { ago: "6s", path: "/cart", source: "Direct", country: "CA" },
-  { ago: "11s", path: "/journal/how-we-glaze", source: "ChatGPT", country: "GB" },
-  { ago: "19s", path: "/shop/planters", source: "Google", country: "US" },
-  { ago: "24s", path: "/checkout/thank-you", source: "Newsletter", country: "US" },
-  { ago: "31s", path: "/", source: "Pinterest", country: "AU" },
-];
-
 export const SOURCE_POINTS: CheckItem[] = [
   { lead: "Channels", text: "like organic search, email, social and AI assistants." },
   { lead: "UTM reports", text: "for source, medium, campaign, term and content." },

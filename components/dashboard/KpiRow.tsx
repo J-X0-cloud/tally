@@ -1,24 +1,23 @@
 import clsx from "clsx";
 
 import { formatMetric } from "@/lib/format";
-import { METRICS } from "@/lib/data/metrics";
-import { conversionRate, delta, getRange } from "@/lib/metrics";
-import type { MetricKey, RangeKey } from "@/types/analytics";
+import type { MetricDefinition, MetricKey, RangeData } from "@/types/analytics";
 
 interface KpiRowProps {
-  range: RangeKey;
+  metrics: MetricDefinition[];
+  data: RangeData;
   active: MetricKey;
   /** When set, tiles are buttons that switch the chart metric. */
   onSelect?: (metric: MetricKey) => void;
 }
 
-export function KpiRow({ range, active, onSelect }: KpiRowProps) {
-  const { totals, priorTotals } = getRange(range);
+export function KpiRow({ metrics, data, active, onSelect }: KpiRowProps) {
+  const { totals, deltas, conversionRate } = data;
 
   return (
     <div className="kpis">
-      {METRICS.map((m) => {
-        const d = delta(totals[m.key], priorTotals[m.key], m.lowerIsBetter);
+      {metrics.map((m) => {
+        const d = deltas[m.key];
         const body = (
           <>
             <span className="kl">{m.label}</span>
@@ -28,7 +27,7 @@ export function KpiRow({ range, active, onSelect }: KpiRowProps) {
                 {d.direction === "up" ? "↑" : "↓"} {d.text}
               </span>
               {m.key === "conversions" ? (
-                <small className="sub">{conversionRate(totals).toFixed(1)}% CR</small>
+                <small className="sub">{conversionRate.toFixed(1)}% CR</small>
               ) : null}
             </span>
           </>

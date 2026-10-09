@@ -1,10 +1,9 @@
 import { compact } from "@/lib/format";
 import { DIGEST } from "@/lib/data/tour";
-import { getRange } from "@/lib/metrics";
+import type { Totals } from "@/types/analytics";
 
-/** The weekly email digest, filled from the last 7 days. */
-export function DigestCard() {
-  const { totals } = getRange("7d");
+/** The weekly email digest, filled from the demo site's last 7 days. */
+export function DigestCard({ totals }: { totals: Totals }) {
   const stats = [
     { label: "Visitors", value: totals.visitors },
     { label: "Pageviews", value: totals.pageviews },

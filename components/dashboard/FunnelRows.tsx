@@ -1,11 +1,10 @@
 import { compact } from "@/lib/format";
-import { funnelSteps } from "@/lib/metrics";
-import type { RangeKey } from "@/types/analytics";
+import type { FunnelStep } from "@/types/analytics";
 
-export function FunnelRows({ range }: { range: RangeKey }) {
+export function FunnelRows({ steps }: { steps: FunnelStep[] }) {
   return (
     <div className="fn">
-      {funnelSteps(range).map((step, i) => (
+      {steps.map((step, i) => (
         <div key={step.name} className="fr">
           <div className="fl">
             <span className="fi">{i + 1}</span>

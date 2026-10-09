@@ -5,13 +5,11 @@ import type { PointerEvent } from "react";
 
 import { PLOT_H, PLOT_W, gridValues, seriesPaths, xLabelIndices, xLabelStyle, yDomain } from "@/lib/charts";
 import { formatAxis, formatMetric } from "@/lib/format";
-import { metricDef } from "@/lib/data/metrics";
-import { getRange } from "@/lib/metrics";
-import type { MetricKey, RangeKey } from "@/types/analytics";
+import type { MetricDefinition, RangeData } from "@/types/analytics";
 
 interface VisitorsChartProps {
-  range: RangeKey;
-  metric: MetricKey;
+  data: RangeData;
+  metric: MetricDefinition;
   /** Show the previous period in the tooltip (the dashed line is hidden by CSS when off). */
   compare?: boolean;
   interactive?: boolean;
@@ -21,14 +19,14 @@ const BRAND = "#E4572E";
 const PREVIOUS = "#BFB4A9";
 
 /** Current period as a filled line, previous period dashed, with a crosshair tooltip on hover. */
-export function VisitorsChart({ range, metric, compare = true, interactive = true }: VisitorsChartProps) {
+export function VisitorsChart({ data, metric: def, compare = true, interactive = true }: VisitorsChartProps) {
   const gradientId = `ga${useId().replace(/:/g, "")}`;
   const plotRef = useRef<HTMLDivElement>(null);
   const tipRef = useRef<HTMLDivElement>(null);
   const [hover, setHover] = useState<{ i: number; width: number } | null>(null);
 
-  const data = getRange(range);
-  const def = metricDef(metric);
+  const range = data.key;
+  const metric = def.key;
   const cur = data.current.map((p) => (p ? p[metric] : null));
   const prev = data.previous.map((p) => p[metric]);
   const n = prev.length;

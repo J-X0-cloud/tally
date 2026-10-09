@@ -12,6 +12,7 @@ import { ButtonLink } from "@/components/ui/ButtonLink";
 import { CheckList } from "@/components/ui/CheckList";
 import { CodeBlock } from "@/components/ui/CodeBlock";
 import { Icon } from "@/components/ui/Icon";
+import { getDemoDashboard } from "@/lib/api";
 import { PURCHASE_SNIPPET } from "@/lib/data/snippets";
 import { REALTIME_POINTS, REPORT_POINTS, SEGMENT_POINTS, SOURCE_POINTS } from "@/lib/data/tour";
 
@@ -23,7 +24,11 @@ export const metadata: Metadata = {
 
 const MUTED_PILL = { background: "#F1EBE3", color: "var(--ink2)" } as const;
 
-export default function FeaturesPage() {
+export default async function FeaturesPage() {
+  const demo = await getDemoDashboard();
+  const month = demo.data["30d"];
+  const sources = demo.dimensions.find((d) => d.key === "sources")!;
+
   return (
     <>
       <section className="phero">
@@ -46,7 +51,7 @@ export default function FeaturesPage() {
             </div>
           </div>
           <div className="canvas">
-            <RealtimeCard />
+            <RealtimeCard realtime={demo.realtime} />
           </div>
         </div>
       </section>
@@ -58,7 +63,7 @@ export default function FeaturesPage() {
             title="Find the step that leaks."
             lede="Chain pages and events into a funnel of two to eight steps. Tally shows how many visitors reach each step in the same visit and how many leave in between."
           />
-          <StepFunnel />
+          <StepFunnel steps={month.funnel} />
           <div className="pills" style={{ marginTop: 18 }}>
             <span className="pill">
               <Icon name="filter" size={13} />
@@ -88,7 +93,7 @@ export default function FeaturesPage() {
           </div>
           <div className="canvas p">
             <div className="grid2" style={{ gridTemplateColumns: "1fr" }}>
-              <BreakdownPanel dimension="sources" range="30d" interactive={false} />
+              <BreakdownPanel dimension={sources} rows={month.breakdowns.sources} interactive={false} />
             </div>
           </div>
         </div>
@@ -107,7 +112,7 @@ export default function FeaturesPage() {
           </div>
           <div className="canvas">
             <div className="card pad">
-              <GoalsTable range="30d" />
+              <GoalsTable rows={month.goals} />
             </div>
           </div>
         </div>
@@ -144,7 +149,7 @@ export default function FeaturesPage() {
             <CheckList items={REPORT_POINTS} />
           </div>
           <div className="canvas">
-            <DigestCard />
+            <DigestCard totals={demo.data["7d"].totals} />
           </div>
         </div>
       </section>

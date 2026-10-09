@@ -5,11 +5,16 @@ import { useState } from "react";
 
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { CheckList } from "@/components/ui/CheckList";
-import { PLANS, VOLUMES, planPrice } from "@/lib/data/pricing";
 import { ENTERPRISE_URL, TRIAL_URL } from "@/lib/data/site";
+import type { PricingCatalog } from "@/types/pricing";
 
-/** Pageview tier and billing period pickers (radio groups) driving the three plan cards. */
-export function PricingSection() {
+/**
+ * Pageview tier and billing period pickers (radio groups) driving the three plan cards. Every price is
+ * quoted by the collector up front, so switching needs no request.
+ */
+export function PricingSection({ catalog }: { catalog: PricingCatalog }) {
+  const { volumes, plans, yearlyMonthsCharged } = catalog;
+  const freeMonths = 12 - yearlyMonthsCharged;
   const [volume, setVolume] = useState(0);
   const [yearly, setYearly] = useState(false);
 
@@ -20,7 +25,7 @@ export function PricingSection() {
           Monthly pageviews
         </span>
         <div className="grpl" role="radiogroup" aria-labelledby="tier-label">
-          {VOLUMES.map((v, i) => (
+          {volumes.map((v, i) => (
             <label key={v} className={clsx(i === volume && "on")}>
               <input
                 className="vis"
@@ -37,7 +42,7 @@ export function PricingSection() {
           {(
             [
               [false, "Monthly"],
-              [true, "Yearly · 2 months free"],
+              [true, `Yearly · ${freeMonths} months free`],
             ] as const
           ).map(([isYearly, label]) => (
             <label key={label} className={clsx(yearly === isYearly && "on")}>
@@ -55,8 +60,9 @@ export function PricingSection() {
       </div>
 
       <div className="plans">
-        {PLANS.map((plan) => {
-          const { price, note } = planPrice(plan.prices[volume], yearly);
+        {plans.map((plan) => {
+          const tier = plan.prices[volume];
+          const { price, note } = yearly ? tier.yearly : tier.monthly;
           return (
             <div key={plan.name} className={clsx("plan", plan.popular && "hot")}>
               {plan.popular ? <span className="hotb">Most popular</span> : null}
@@ -66,7 +72,7 @@ export function PricingSection() {
                 {price}
                 {price === "Custom" ? null : <small>/mo</small>}
               </div>
-              <div className="per">{note(VOLUMES[volume])}</div>
+              <div className="per">{note}</div>
               <ButtonLink href={TRIAL_URL} variant={plan.popular ? "p" : "d"}>
                 Start 30-day trial
               </ButtonLink>

@@ -1,13 +1,13 @@
 import type { CSSProperties } from "react";
 
 import { compact } from "@/lib/format";
-import { funnelSteps } from "@/lib/metrics";
+import type { FunnelStep } from "@/types/analytics";
 
 /** Column funnel: each step's bar height is its share of the first step; the hatched part is who left. */
-export function StepFunnel() {
+export function StepFunnel({ steps }: { steps: FunnelStep[] }) {
   return (
     <div className="bfn">
-      {funnelSteps("30d").map((step, i) => {
+      {steps.map((step, i) => {
         const h = Math.max(step.ofFirst, 4);
         const lost = 100 - step.ofFirst;
         return (

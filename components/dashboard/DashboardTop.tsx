@@ -1,28 +1,30 @@
 import clsx from "clsx";
 
 import { Icon } from "@/components/ui/Icon";
-import { SITE } from "@/lib/data/simulation";
-import { RANGE_OPTIONS, getRange } from "@/lib/metrics";
-import type { RangeKey } from "@/types/analytics";
+import type { RangeData, RangeKey, SiteInfo } from "@/types/analytics";
 
 interface DashboardTopProps {
-  range: RangeKey;
+  site: SiteInfo;
+  ranges: Array<{ key: RangeKey; label: string }>;
+  /** The selected range's data. */
+  data: RangeData;
   /** Omit for the static hero preview. */
   onRangeChange?: (range: RangeKey) => void;
 }
 
 /** Site switcher, live visitor count, filter button and date range. */
-export function DashboardTop({ range, onRangeChange }: DashboardTopProps) {
+export function DashboardTop({ site, ranges, data, onRangeChange }: DashboardTopProps) {
+  const range = data.key;
   return (
     <div className="dtop">
       <div className="site">
-        <i className="fav">{SITE.initial}</i>
-        <b>{SITE.domain}</b>
+        <i className="fav">{site.initial}</i>
+        <b>{site.domain}</b>
         <Icon name="chev" size={14} />
       </div>
       <span className="livep">
         <i />
-        <b>{SITE.currentVisitors}</b> current visitors
+        <b>{site.currentVisitors}</b> current visitors
       </span>
       <span className="sp" />
       <button type="button" className="fbtn">
@@ -32,10 +34,10 @@ export function DashboardTop({ range, onRangeChange }: DashboardTopProps) {
       <div className="rng">
         <span className="rlab">
           <Icon name="cal" size={14} />
-          <span>{getRange(range).span}</span>
+          <span>{data.span}</span>
         </span>
         <div className="seg" role="group" aria-label="Date range">
-          {RANGE_OPTIONS.map((o) => (
+          {ranges.map((o) => (
             <button
               key={o.key}
               type="button"

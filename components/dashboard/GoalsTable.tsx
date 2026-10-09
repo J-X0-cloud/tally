@@ -1,8 +1,7 @@
 import { compact, usd } from "@/lib/format";
-import { goalRows } from "@/lib/metrics";
-import type { RangeKey } from "@/types/analytics";
+import type { GoalRow } from "@/types/analytics";
 
-export function GoalsTable({ range }: { range: RangeKey }) {
+export function GoalsTable({ rows }: { rows: GoalRow[] }) {
   return (
     <table className="gt">
       <thead>
@@ -14,7 +13,7 @@ export function GoalsTable({ range }: { range: RangeKey }) {
         </tr>
       </thead>
       <tbody>
-        {goalRows(range).map((g) => (
+        {rows.map((g) => (
           <tr key={g.name}>
             <td>
               <span className="gn">{g.name}</span>

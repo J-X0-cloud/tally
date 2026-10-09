@@ -6,6 +6,7 @@ import { PlanComparison } from "@/components/marketing/PlanComparison";
 import { PricingSection } from "@/components/marketing/PricingSection";
 import { SectionHead } from "@/components/marketing/SectionHead";
 import { ButtonLink } from "@/components/ui/ButtonLink";
+import { getPricing } from "@/lib/api";
 import { BILLING_FAQ } from "@/lib/data/pricing";
 import { TRIAL_URL } from "@/lib/data/site";
 
@@ -15,7 +16,9 @@ export const metadata: Metadata = {
     "Simple Tally pricing based on monthly pageviews. Every plan includes the full dashboard, goals and a 30-day free trial.",
 };
 
-export default function PricingPage() {
+export default async function PricingPage() {
+  const catalog = await getPricing();
+
   return (
     <>
       <section className="phero center" style={{ textAlign: "center" }}>
@@ -31,14 +34,14 @@ export default function PricingPage() {
 
       <section style={{ paddingBottom: 40 }}>
         <div className="wrap">
-          <PricingSection />
+          <PricingSection catalog={catalog} />
         </div>
       </section>
 
       <section className="sec">
         <div className="wrap">
           <SectionHead centered title="Compare plans" />
-          <PlanComparison />
+          <PlanComparison catalog={catalog} />
         </div>
       </section>
 
