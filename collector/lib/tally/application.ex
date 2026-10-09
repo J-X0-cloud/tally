@@ -12,6 +12,8 @@ defmodule Tally.Application do
       Tally.Ingest.Salts,
       Tally.Events.Store,
       Tally.Events.Buffer,
+      Tally.Live,
+      TallyWeb.Presence,
       TallyWeb.Endpoint
     ]
 

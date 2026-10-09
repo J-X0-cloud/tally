@@ -8,6 +8,10 @@ defmodule TallyWeb.Endpoint do
   """
   use Phoenix.Endpoint, otp_app: :tally
 
+  socket "/live", TallyWeb.LiveSocket,
+    websocket: true,
+    longpoll: false
+
   plug Plug.Static,
     at: "/",
     from: :tally,
